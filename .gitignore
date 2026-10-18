@@ -1,0 +1,13 @@
+.env
+
+__pycache__/
+*.pyc
+
+reports/
+
+basics/
+venv/
+auth_state.json
+
+allure-results/
+allure-report/

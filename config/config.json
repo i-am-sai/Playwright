@@ -1,0 +1,6 @@
+{
+    "base_url": "https://aha-redesign.ipublishcentral.com/",
+    "bookshelf_url": "https://aha-redesign.ipublishcentral.com/bookshelf",
+    "sso_login_url": "https://ahassoqa.heart.org/saml/sso",
+    "timeout": 50000
+}
