@@ -129,9 +129,9 @@ def reader_on_chapter(logged_in_page):
     reader = shelf.click_read_online()
     reader.verify_reader_loaded()
     reader.capture_screenshot("Reader Loaded")
-
     reader.open_table_of_contents()
     reader.capture_screenshot("TOC Loaded")
+    
     reader.click_toc_chapter("Part 4")
     reader.capture_screenshot("TOC Chapter 4 Loaded")
     reader.verify_chapter_heading("Testing")

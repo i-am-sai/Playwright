@@ -26,9 +26,9 @@ class AnnotationPage(BasePage):
     ANNOTATION_CARD_SELECTOR = "div.notification-block"
 
     COLOR_HEX_MAP = {
-        "orange": None,   # fill in after inspecting an orange annotation card
-        "blue": None,
-        "brown": None,
+        "orange": "#c26400",   # fill in after inspecting an orange annotation card
+        "blue": "#007bff",  # fill in after inspecting a blue annotation card
+        "brown": "#8B4513",  # fill in after inspecting a brown annotation card
         "purple": "#bb0ebe",  # observed in your screenshot
     }
     
