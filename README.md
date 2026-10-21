@@ -26,3 +26,7 @@ Playwright browser
 Ubuntu system libraries
        ↓
 Linux kernel / hardware
+
+Create .env file and add credentials for testing: 
+TEST_USERNAME=example@yopmail.com
+TEST_PASSWORD=Test@123

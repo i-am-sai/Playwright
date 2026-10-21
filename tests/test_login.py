@@ -4,9 +4,7 @@ from pages.login_page import LoginPage
 from utils.config_reader import ConfigReader
 from utils.logger import logger
 
-@pytest.mark.smoke
-@pytest.mark.sanity
-@pytest.mark.regression
+
 @pytest.mark.order(-1) 
 def test_logout(logged_in_page):
     config = ConfigReader()

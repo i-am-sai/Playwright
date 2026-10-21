@@ -4,7 +4,7 @@ from pages.shelf_page import ShelfPage
 from utils.config_reader import ConfigReader
 from utils.logger import logger
 
-@pytest.mark.smoke
+
 def test_readerloading(logged_in_page):
    
     shelf = ShelfPage(logged_in_page)

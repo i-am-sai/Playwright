@@ -4,3 +4,4 @@ pytest-html
 pytest
 playwright
 pytest-plawywright
+pytest-order

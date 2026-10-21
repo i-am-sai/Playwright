@@ -24,10 +24,13 @@ class LoginPage(BasePage):
     
     def enter_credentials(self, username, password):
         logger.info(f"Entering credentials for user: {username}")
+        print("username_field:", type(self.username_field))
+        print("username_field:", self.username_field)
         self.username_field.click()
         self.username_field.fill(username)
         self.username_field.press("Tab")
         self.password_field.fill(password)
+        
 
     def click_signin(self):
         logger.info("Clicking Sign In")
