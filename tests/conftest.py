@@ -9,6 +9,11 @@ from playwright.sync_api import sync_playwright
 from pages.login_page import LoginPage
 from pages.shelf_page import ShelfPage
 from pages.annotation_page import AnnotationPage
+from pages.toc_page import TOCPage
+from pages.reader_search_page import ReaderSearchPage
+from pages.algorithm_page import AlgorithmPage
+from pages.figure_page import FigurePage
+from pages.bookmark_page import BookmarkPage
 from utils.config_reader import ConfigReader
 from utils.screenshot_helper import take_screenshot
 from utils.logger import logger
@@ -52,7 +57,7 @@ def authenticated_state(browser):
             "authentication state is invalid, refusing to save storage_state."
         )
 
-    logger.info(f"SimpleSAMLAuthToken confirmed present, saving storage state {auth_cookie}")
+    logger.info(f"SimpleSAMLAuthToken confirmed present, saving storage state")
     state = context.storage_state(path="reports/.auth/auth_state.json")
     context.close()
     return state
@@ -129,44 +134,52 @@ def reader_on_chapter(logged_in_page):
     reader = shelf.click_read_online()
     reader.verify_reader_loaded()
     reader.capture_screenshot("Reader Loaded")
-    reader.open_table_of_contents()
-    reader.capture_screenshot("TOC Loaded")
-    
-    reader.click_toc_chapter("Part 4")
-    reader.capture_screenshot("TOC Chapter 4 Loaded")
-    reader.verify_chapter_heading("Testing")
-    # reader.verify_chapter_content("aha1418")
-    # logger.info("Chapter content 1418 present ")
-
     return reader
 
+# reader_on_chapter is a page object instance of ReaderPage.
 @pytest.fixture
 def annotation_page(reader_on_chapter):
     return AnnotationPage(reader_on_chapter.page)
 
+@pytest.fixture
+def toc_page(reader_on_chapter):
+    return TOCPage(reader_on_chapter.page)
 
+@pytest.fixture
+def reader_search_page(reader_on_chapter):
+    return ReaderSearchPage(reader_on_chapter.page)
+
+@pytest.fixture
+def algorithm_page(reader_on_chapter):
+    return AlgorithmPage(reader_on_chapter.page)
+
+@pytest.fixture
+def figure_page(reader_on_chapter):
+    return FigurePage(reader_on_chapter.page)
+
+@pytest.fixture
+def bookmark_page(reader_on_chapter):
+    return BookmarkPage(reader_on_chapter.page)
+
+
+
+# Explanation:
 # import shutil — Python's built-in module for higher-level file operations; os can delete single files, but shutil is what you use for deleting entire folders and their contents at once.
-
 # @pytest.fixture(scope="session", autouse=True) — two things happening here:
-
 # scope="session" means this runs once for the entire test run, not once per test — you want cleanup to happen a single time, at the very start, not repeated before every individual test.
 # autouse=True means every test automatically triggers this fixture without needing to list it as a parameter — you'll never write def test_login(clean_reports, page):, it just happens silently in the background for the whole session.
 # yield — this is the same pattern from your browser/page fixtures. Everything before yield runs as setup (the cleanup, in this case), and since there's no code after yield, there's no teardown step — the fixture just finishes once the whole session ends.
 
 # tests/conftest.py
-# No custom fixtures needed yet.
 # pytest-playwright already provides:
 # browser
 # context
 # page
 
 # Why return AnnotationPage(reader_on_chapter.page)
-# Here:
-
-# reader_on_chapter is a page object instance of ReaderPage.
 
 # So:
-
+# reader_on_chapter is a page object instance of ReaderPage.
 # reader_on_chapter is not the raw browser page
 # it is an object that wraps a Playwright page
 # reader_on_chapter.page means: “give me the underlying Playwright Page inside that reader object”
@@ -174,12 +187,8 @@ def annotation_page(reader_on_chapter):
 
 
 # You have two layers:
-
-# Page Object layer
-
-# ReaderPage
-# AnnotationPage
-# Playwright browser layer
+# 1. Page Object layer: ReaderPage,  AnnotationPage
+# 2. Playwright browser layer
 
 # the actual Page object
 # reader_on_chapter = object representing the reader page
@@ -191,7 +200,6 @@ def annotation_page(reader_on_chapter):
 
 
 # So:
-
 # the browser page is reused for the test session
 # but each test gets its own fresh fixture-created page object instance
 # the underlying browser page is still the same logged-in page context for that fixture lifecycle

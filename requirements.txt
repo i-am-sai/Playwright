@@ -3,5 +3,5 @@ allure-pytest
 pytest-html
 pytest
 playwright
-pytest-plawywright
+pytest-playwright
 pytest-order

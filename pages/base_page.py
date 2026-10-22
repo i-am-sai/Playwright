@@ -1,3 +1,4 @@
+from playwright.sync_api import expect
 from utils.screenshot_helper import take_screenshot
 from utils.logger import logger
 
@@ -42,6 +43,12 @@ class BasePage:
             f"Target element never appeared after {max_attempts} scroll attempts. "
             f"Final page height: {previous_height}"
         )
+    
+    def _verify_ready(self, locator, name: str):
+        logger.info(f"Verifying '{name}' is visible and enabled")
+        expect(locator).to_be_visible()
+        expect(locator).to_be_enabled()
+
 
 # ✅ Keep only generic methods here.
 # ✅ All page classes should inherit BasePage.

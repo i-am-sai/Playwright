@@ -6,6 +6,7 @@ from utils.screenshot_helper import take_screenshot
 class AnnotationPage(BasePage):
     def __init__(self, page: Page):
             super().__init__(page)
+            self.note_icon = page.get_by_role("link", name="Note", exact=True)
             
 
     # Web Elements
@@ -32,9 +33,15 @@ class AnnotationPage(BasePage):
         "purple": "#bb0ebe",  # observed in your screenshot
     }
     
+    UNDERLINE_BUTTON = "select underline"
+    NOTE_HEX = None        # fill in after the first run (the failure message prints the card style)
+    UNDERLINE_HEX = None 
+    
+
+    def underline_button(self):
+        return self.page.get_by_role("button", name=self.UNDERLINE_BUTTON)
 
 # Methods: 
-
 
     def _reader_frame(self):
         return self.page.locator(self.IFRAME_SELECTOR).content_frame
@@ -158,3 +165,35 @@ class AnnotationPage(BasePage):
         )
         logger.info(f"CFI confirmed targeting paragraph #{expected_paragraph_id}: {cfi}")
 
+    def underline_selection(self):
+        logger.info("Applying underline")
+        expect(self.underline_button()).to_be_visible()
+        self.underline_button().click()
+        self.refresh()
+
+    def add_note_to_selection(self, note_text: str):
+        """Call after select_paragraph_text(): the colour panel with the Note link must be showing."""
+        logger.info(f"Adding note '{note_text}'")
+        self.note_icon.click()
+
+        note_field = self.page.get_by_placeholder("Type Your Note")
+        expect(note_field).to_be_visible()
+        note_field.fill(note_text)
+
+        expect(self.page.get_by_text("Saved", exact=True)).to_be_visible()
+        self.page.get_by_role("button", name="close add note").click()
+
+    def verify_note_in_listing(self, note_text: str):
+        logger.info(f"Verifying note '{note_text}' in annotation listing")
+        self.open_annotation_listing()
+        card = self.page.locator(self.ANNOTATION_CARD_SELECTOR).filter(has_text=note_text)
+        expect(card).to_be_visible(timeout=15000)
+
+    
+    def create_note(self, paragraph_id: str, note_text: str):
+        """Convenience method: select paragraph text + apply highlight color in one call."""
+        self.select_paragraph_text(paragraph_id)
+        self.add_note_to_selection(note_text)
+        self.refresh()
+        
+        

@@ -21,7 +21,7 @@ def test_logout(logged_in_page):
     login_page.capture_screenshot("after_logout")
     login_page.verify_logged_out
     logger.info("Successfully Logged Out")
-    # Pending: Logout Assertion
+  
 
 
 

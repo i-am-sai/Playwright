@@ -10,7 +10,6 @@ class TestReaderUI:
 
     def test_readerUI(self, reader_on_chapter):
         logger.info("\nTest Case 3: Reader UI Elements Verified")    
-        # reader_on_chapter.verify_reader_loaded()
         reader_on_chapter.capture_screenshot("Reader Loaded")
         reader_on_chapter.verify_back_to_shelf_button()
         reader_on_chapter.verify_table_of_contents_button()

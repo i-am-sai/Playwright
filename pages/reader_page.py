@@ -27,10 +27,6 @@ class ReaderPage(BasePage):
         self.seek_bar_label = page.locator("#sliderContainer").get_by_text(re.compile(r"^Part \d+")).first
         self.seek_bar_percentage = page.locator("label.seekbarlabel span.ml-1")
     
-    def _verify_ready(self, locator, name: str):
-        logger.info(f"Verifying '{name}' is visible and enabled")
-        expect(locator).to_be_visible()
-        expect(locator).to_be_enabled()
 
     def open_table_of_contents(self):
         logger.info("Opening Table of Contents")
@@ -107,7 +103,7 @@ class ReaderPage(BasePage):
         logger.info("Verifying seek bar percentage is visible and formatted")
         expect(self.seek_bar_percentage).to_be_visible()
         expect(self.seek_bar_percentage).to_have_text(re.compile(r"^\s*\d+%\s*$"))
-        
+
     def verify_chapter_content(self, paragraph_id: str):
         """Confirms a specific paragraph (by DOM id) is present and visible in the loaded chapter."""
         
