@@ -179,8 +179,10 @@ class AnnotationPage(BasePage):
         note_field = self.page.get_by_placeholder("Type Your Note")
         expect(note_field).to_be_visible()
         note_field.fill(note_text)
-
-        expect(self.page.get_by_text("Saved", exact=True)).to_be_visible()
+        # Wait up to 5 seconds for note to be saved
+        saved_message = self.page.get_by_text("Saved", exact=True)
+        expect(saved_message).to_be_visible(timeout=5000)
+        # expect(self.page.get_by_text("Saved", exact=True)).to_be_visible()
         self.page.get_by_role("button", name="close add note").click()
 
     def verify_note_in_listing(self, note_text: str):

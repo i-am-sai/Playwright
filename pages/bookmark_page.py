@@ -10,7 +10,7 @@ class BookmarkPage(BasePage):
 
         self.bookmark_button = page.get_by_role("button", name="bookmark", exact=True)
         self.bookmarked_button = page.get_by_role("button", name="bookmarked", exact=True)
-        self.add_bookmark_button = page.get_by_role("button", name="Add Bookmark")
+        self.add_bookmark_button = page.locator("button.addBookmark", has_text="Add Bookmark")
         self.name_field = page.get_by_role("textbox", name="Bookmark Name")
         self.save_button = page.get_by_role("button", name="Save", exact=True)
         self.ok_button = page.get_by_role("button", name="OK", exact=True)
@@ -22,6 +22,7 @@ class BookmarkPage(BasePage):
     def add_bookmark(self, bookmark_name: str):
         logger.info(f"Adding bookmark '{bookmark_name}'")
         self.bookmark_button.click()
+        self.page.mouse.move(0, 300)
         self.add_bookmark_button.click()
         self.name_field.fill(bookmark_name)
         self.save_button.click()

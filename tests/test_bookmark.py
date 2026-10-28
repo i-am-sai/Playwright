@@ -7,6 +7,7 @@ from pages.bookmark_page import BookmarkPage
 class TestBookmark:
 
     
+    @pytest.mark.dev
     def test_add_bookmark_and_verify_in_listing(self, reader_on_chapter, bookmark_page):
         logger.info("\nTest Case 8: Bookmark Added and Listed")
         reader_on_chapter.open_table_of_contents()

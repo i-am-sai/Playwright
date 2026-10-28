@@ -9,7 +9,7 @@ from datetime import datetime
 
 class TestHighlightAnnotation:
 
-    @pytest.mark.dev
+  
     def test_highlight_paragraph_purple(self, reader_on_chapter, annotation_page):
         """
            TC: Select a full paragraph of reader text and apply an orange highlight.
@@ -42,7 +42,7 @@ class TestHighlightAnnotation:
         annotation_page.capture_screenshot("Highlight Present")
 
         annotation_page.verify_annotation_cfi_targets_paragraph(paragraph_id)
-    @pytest.mark.dev
+    
     def test_highlight_paragraph_orange(self, reader_on_chapter, annotation_page):
         """
            TC: Select a full paragraph of reader text and apply an orange highlight.
@@ -78,8 +78,6 @@ class TestHighlightAnnotation:
 
 class TestNoteAnnotation:
 
-    
-    @pytest.mark.dev
     def test_add_note_and_verify_in_listing(self, reader_on_chapter, annotation_page):
         logger.info("\nTest Case 4: Note Creation")    
         reader_on_chapter.open_table_of_contents()

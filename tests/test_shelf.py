@@ -19,7 +19,14 @@ def test_readerloading(logged_in_page):
     reader.click_back_to_shelf()
 
 
-
+def test_headless_check(page):
+    resp = page.goto("https://aha-redesign.ipublishcentral.com/")
+    print("status:", resp.status)
+    print("UA:", page.evaluate("navigator.userAgent"))
+    print("webdriver:", page.evaluate("navigator.webdriver"))
+    print("title:", page.title())
+    print(page.content()[:600])
+    page.screenshot(path="headless.png", full_page=True)
 
 
 

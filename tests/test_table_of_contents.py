@@ -7,7 +7,7 @@ from utils.logger import logger
 
 class TestTableOfContents:
    
-    
+   
     def test_toc_ui_elements_present(self, reader_on_chapter, toc_page):
         logger.info("\nTest Case 4: TOC UI Elements Verified")
         reader_on_chapter.open_table_of_contents()
